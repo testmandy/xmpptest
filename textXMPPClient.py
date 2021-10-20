@@ -3,9 +3,7 @@
 # @Time : 2021/10/19 19:52
 # @Author : Mandy
 from __future__ import print_function
-
 import time
-
 import conftest
 from receiveGroupMessage import GroupMessageProtocol
 from pingHandler import PingHandler

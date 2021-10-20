@@ -8,7 +8,6 @@ import sys
 import time
 from datetime import datetime
 from imp import reload
-
 import conftest
 from twisted.internet import reactor
 import uuid

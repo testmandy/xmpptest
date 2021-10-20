@@ -5,7 +5,6 @@
 from __future__ import print_function
 from twisted.words.protocols.jabber import jid
 import sys
-import time
 from imp import reload
 
 import conftest

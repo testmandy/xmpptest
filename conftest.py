@@ -10,9 +10,9 @@ from imp import reload
 reload(sys) #重新加载sys
 sys.setdefaultencoding('utf8')
 
-
 xmppclientlist = []
 sendAll = 0
+resource = 'desktop.win.dc40936d9ed9641c59bf3c37033a2bc4_2db15f9a6d1516f219df1ed0ee7001c7_202b82fb150e0c0a94bfdd945093eb20'
 
 GROUP_TEXT_MESSAGE = """<message xmlns="" id="%s" type="groupchat" to="%s" from="%s">
 <body>%s</body>
