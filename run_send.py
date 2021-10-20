@@ -54,7 +54,7 @@ if __name__ == '__main__':
         testgroupname = 'u21000000000_1634010735099'
         source = ''
     logging.info('start connecting')
-    genTestXMPPClients(startindex, count, interval, domain, password, testgroupname, total)
+    genTestXMPPClients(startindex, count, interval, domain, password, testgroupname=testgroupname, total=total)
     send.startSendGroupMessage(count, sendinterval, testgroupname, domain, total, source)
 
     reactor.run()

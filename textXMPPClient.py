@@ -4,6 +4,8 @@
 # @Author : Mandy
 from __future__ import print_function
 
+import time
+
 import conftest
 from receiveGroupMessage import GroupMessageProtocol
 from pingHandler import PingHandler
@@ -20,24 +22,31 @@ from twisted.words.protocols.jabber.xmlstream import StreamManager
 reload(sys)  # 重新加载sys
 sys.setdefaultencoding('utf8')
 
+login_count = 0
 
 # 生成count个客户端，按interval 间隔 生成
-def genTestXMPPClients(startindex, count, interval, domain, password, testgroupname, total):
+def genTestXMPPClients(startindex, count, interval, domain, password, resource=None, testgroupname=None, total=None):
     for i in range(count):
         index = i + startindex
         reactor.callLater(i * interval / 1000.0,
-                          lambda i: TestXMPPClient(i, count, domain, password, testgroupname, total),
+                          lambda i: TestXMPPClient(i, count, domain, password, resource, testgroupname, total),
                           index)
     return
 
 
 class TestXMPPClient(object):
-    def __init__(self, index, count, domain, password, testgroupname, total):
+    def __init__(self, index, count, domain, password, resource=None, testgroupname=None, total=None):
         # self.reactor = reactor
         self.username = 'u2100%07d' % (index)
         self.domain = domain
-        self.userjid = JID('%s@%s' % (self.username, self.domain))
+        if resource is None:
+            self.userjid = JID('%s@%s/%s' % (self.username, self.domain, resource))
+        else:
+            self.userjid = JID('%s@%s' % (self.username, self.domain))
+            print ('[login]%s'%self.username)
         self.testgroupname = testgroupname
+        self.count = count
+        self.resource = resource
 
         f = client.XMPPClientFactory(self.userjid, password)
 
@@ -67,6 +76,7 @@ class TestXMPPClient(object):
         self.xmlstream = xs
         self.xmlstream.client = self
 
+
     def disconnected(self, xs):
         print('Disconnected.')
         conftest.xmppclientlist.remove(self)
@@ -93,6 +103,12 @@ class TestXMPPClient(object):
 
         # 把自己加入到列表
         conftest.xmppclientlist.append(self)
+        global login_count
+        login_count += 1
+        if self.resource is not None:
+            time.sleep(1)
+            if login_count == self.count:
+                reactor.stop()
 
     def init_failed(self, failure):
         print("Initialization failed.")
