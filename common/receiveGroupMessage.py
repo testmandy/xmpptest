@@ -8,7 +8,7 @@ import sys
 from imp import reload
 
 import conftest
-from messageProtocol import MessageProtocol
+from utils.messageProtocol import MessageProtocol
 import logging
 import copy
 

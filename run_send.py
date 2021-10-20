@@ -10,8 +10,8 @@ import sys
 import time
 from imp import reload
 import logging
-from sendMessage import SendMessage
-from textXMPPClient import genTestXMPPClients
+from common.sendMessage import SendMessage
+from common.textXMPPClient import genTestXMPPClients
 from twisted.internet import reactor
 
 reload(sys) #重新加载sys

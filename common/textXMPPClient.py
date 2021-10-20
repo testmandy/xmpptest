@@ -6,7 +6,7 @@ from __future__ import print_function
 import time
 import conftest
 from receiveGroupMessage import GroupMessageProtocol
-from pingHandler import PingHandler
+from utils.pingHandler import PingHandler
 import sys
 from imp import reload
 import uuid
@@ -41,7 +41,7 @@ class TestXMPPClient(object):
             self.userjid = JID('%s@%s/%s' % (self.username, self.domain, resource))
         else:
             self.userjid = JID('%s@%s' % (self.username, self.domain))
-            print ('[login]%s'%self.username)
+            print ('[utils]%s'%self.username)
         self.testgroupname = testgroupname
         self.count = count
         self.resource = resource

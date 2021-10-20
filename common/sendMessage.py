@@ -71,4 +71,5 @@ class SendMessage(object):
                 sender.xmlstream.send(msg)
             else:
                 sendedMessageCount -= 1
+                time.sleep(2)
                 reactor.stop()
