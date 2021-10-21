@@ -11,7 +11,10 @@ reload(sys) #重新加载sys
 sys.setdefaultencoding('utf8')
 
 xmppclientlist = []
+receiveAll = 0
 sendAll = 0
+start_time = ''
+end_time = ''
 resource = 'desktop.win.dc40936d9ed9641c59bf3c37033a2bc4_2db15f9a6d1516f219df1ed0ee7001c7_202b82fb150e0c0a94bfdd945093eb20'
 
 GROUP_TEXT_MESSAGE = """<message xmlns="" id="%s" type="groupchat" to="%s" from="%s">
@@ -44,6 +47,41 @@ GROUP_ENC_TEXT_MESSAGE = """<message xmlns="" id="%s" type="groupchat" to="%s" f
 <property><name>message.prop.timestamp</name><value type="string">%s</value></property>
 </properties></message>"""
 
+SINGLE_TEXT_MESSAGE = """<message xmlns="" id="%s" type="chat" to="%s" from="%s">
+<body>%s</body>
+<properties xmlns="http://www.jivesoftware.com/xmlns/xmpp/properties">
+<property><name>message.prop.type</name><value type="string">message.prop.type.chat</value></property>
+<property><name>message.prop.destroy</name><value type="string">never_burn</value></property>
+<property><name>message.prop.chattype</name><value type="string">single</value></property>
+<property><name>message.prop.id</name><value type="string">%s</value></property>
+<property><name>message.prop.security</name><value type="string">plain</value></property>
+<property><name>message.prop.with</name><value type="string">%s</value></property>
+<property><name>message.prop.akey</name><value type="string">akey.sw</value></property>
+<property><name>message.prop.im.msgtype</name><value type="string">text</value></property>
+<property><name>message.prop.encryptVer</name><value type="string">1</value></property>
+<property><name>message.prop.timestamp</name><value type="string">%s</value></property>
+</properties></message>
+"""
+
+SINGLE_RECV_RECEIPTS_MESSAGE = """<message xmlns="" id="%s" type="chat" to="%s" from="%s">
+<body>%s</body>
+<properties xmlns="http://www.jivesoftware.com/xmlns/xmpp/properties">
+<property><name>message.prop.type</name><value type="string">message.prop.type.ctrl</value></property>
+<property><name>message.prop.ctrl.msgtype</name><value type="string">recv_receipts</value></property>
+<property><name>message.prop.id</name><value type="string">%s</value></property>
+<property><name>message.prop.timestamp</name><value type="string">%s</value></property>
+</properties></message>
+"""
+
+SINGLE_READ_RECEIPTS_MESSAGE = """<message xmlns="" id="%s" type="chat" to="%s" from="%s">
+<body>%s</body>
+<properties xmlns="http://www.jivesoftware.com/xmlns/xmpp/properties">
+<property><name>message.prop.type</name><value type="string">message.prop.type.ctrl</value></property>
+<property><name>message.prop.ctrl.msgtype</name><value type="string">read_receipts</value></property>
+<property><name>message.prop.id</name><value type="string">%s</value></property>
+<property><name>message.prop.timestamp</name><value type="string">%s</value></property>
+</properties></message>
+"""
 
 
 

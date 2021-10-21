@@ -10,15 +10,15 @@ import sys
 import time
 from imp import reload
 import logging
-from common.sendMessage import SendMessage
-from common.textXMPPClient import genTestXMPPClients
+from common.sendGroupMessage import SendGroupMessage
+from common.testGroupClient import genTestXMPPClients
 from twisted.internet import reactor
 
 reload(sys) #重新加载sys
 sys.setdefaultencoding('utf8')
 
 
-send = SendMessage()
+send = SendGroupMessage()
 if __name__ == '__main__':
     hostname = socket.getfqdn(socket.gethostname())
     FORMAT = "%(asctime)-15s   %(message)s"

@@ -5,7 +5,8 @@
 from __future__ import print_function
 import time
 import conftest
-from receiveGroupMessage import GroupMessageProtocol
+from common.receiveSingleMessage import SingleMessageProtocol
+from common.receiveGroupMessage import GroupMessageProtocol
 from utils.pingHandler import PingHandler
 import sys
 from imp import reload
@@ -21,6 +22,7 @@ reload(sys)  # 重新加载sys
 sys.setdefaultencoding('utf8')
 
 login_count = 0
+
 
 # 生成count个客户端，按interval 间隔 生成
 def genTestXMPPClients(startindex, count, interval, domain, password, resource=None, testgroupname=None, total=None):
@@ -38,10 +40,9 @@ class TestXMPPClient(object):
         self.username = 'u2100%07d' % (index)
         self.domain = domain
         if resource is None:
-            self.userjid = JID('%s@%s/%s' % (self.username, self.domain, resource))
-        else:
             self.userjid = JID('%s@%s' % (self.username, self.domain))
-            print ('[utils]%s'%self.username)
+        else:
+            self.userjid = JID('%s@%s/%s' % (self.username, self.domain, resource))
         self.testgroupname = testgroupname
         self.count = count
         self.resource = resource
@@ -74,7 +75,6 @@ class TestXMPPClient(object):
         self.xmlstream = xs
         self.xmlstream.client = self
 
-
     def disconnected(self, xs):
         print('Disconnected.')
         conftest.xmppclientlist.remove(self)
@@ -101,11 +101,13 @@ class TestXMPPClient(object):
 
         # 把自己加入到列表
         conftest.xmppclientlist.append(self)
+        print ('xmppclientlist:%s' % conftest.xmppclientlist)
         global login_count
         login_count += 1
         if self.resource is not None:
-            time.sleep(1)
+            print('[login]%s' % self.username)
             if login_count == self.count:
+                time.sleep(1)
                 reactor.stop()
 
     def init_failed(self, failure):

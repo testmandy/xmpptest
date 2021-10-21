@@ -20,7 +20,7 @@ start_time = ''
 end_time = ''
 
 
-class SendMessage(object):
+class SendGroupMessage(object):
     # 拼接群聊消息
     def genGroupTextMessage(self, sender, groupnamejid, content):
         messageid = str(uuid.uuid4())
@@ -43,11 +43,12 @@ class SendMessage(object):
         if len(conftest.xmppclientlist) < count:
             reactor.callLater(5, self.startSendGroupMessage, count, interval, groupname, domain, total,
                               source)
+            print ('xmppclientlist:%s count:%d'%(conftest.xmppclientlist, count))
         else:
             # 把下一次调度放到发送之前，确保调度开始的间隔受处理的影响小一点
             reactor.callLater(interval / 1000.0, self.startSendGroupMessage, count, interval, groupname, domain, total,
                               source)
-
+            print ('xmppclientlist:%s count:%d'%(conftest.xmppclientlist, count))
             si = random.randrange(count)
             sender = conftest.xmppclientlist[si]
             global sendedMessageCount, start_time, end_time

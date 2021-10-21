@@ -15,7 +15,7 @@ import sys
 from twisted.internet import reactor
 
 import conftest
-from common.textXMPPClient import genTestXMPPClients
+from common.testGroupClient import genTestXMPPClients
 
 
 if __name__ == '__main__':
